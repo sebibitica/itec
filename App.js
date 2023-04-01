@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 import QRScanner from "./Screens/QRScanner";
 import MapScreen from "./Screens/MapScreen";
 import FeedScreen from "./Screens/FeedScreen";
+import { EventPage } from "./Screens/EventPage";
 
 export default function App() {
   return (
@@ -18,13 +19,18 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="QRScanner"
           component={QRScanner}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="MapScreen"
-          component={MapScreen}
+          name="EventPage"
+          component={EventPage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
