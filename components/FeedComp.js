@@ -4,17 +4,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
-const EventPill = ({ name, category, description, program, location , data}) => {
+const EventPill = ({ lat, lng, name, category, description, program, location , data}) => {
   const datafrumos =
   data.slice(8, 10) + "-" + data.slice(5, 7) + "-" + data.slice(0, 4);
   const navigation = useNavigation()  
   const handleAboutPress = () => {
     navigation.navigate('EventPage', { 
+      latitude:lat,
+      longitude:lng,
       name:name,
       category:category,
       description:description,
       program:program,
       location:location,
+      datax:datafrumos,
     });
   }
 

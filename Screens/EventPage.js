@@ -2,10 +2,12 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 
-export function EventPage ({ name, category, description, program, location }){
-
+export function EventPage ({ latitdue,longitude,name, category, description, program, location,datax }){
+    const navigation=useNavigation();
     const route = useRoute();
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -17,6 +19,8 @@ export function EventPage ({ name, category, description, program, location }){
                         <Text style={styles.category}>{route.params.category}</Text>
                         <Text style={styles.divider}>|</Text>
                         <Text style={styles.category}>{route.params.program}</Text>
+                        <Text style={styles.divider}>|</Text>
+                        <Text style={styles.category}>{route.params.datax}</Text>
                     </View>
                 </View>
                 
@@ -25,6 +29,12 @@ export function EventPage ({ name, category, description, program, location }){
                     <Text style={styles.description}>{route.params.description}</Text>
                     <View style={styles.locationContainer}>
                         <Text style={styles.location}>{route.params.location}</Text>
+                        <MaterialCommunityIcons
+                            name="map-marker-outline"
+                            size={19}
+                            color="black"
+                            style={styles.icon}
+                        />
                     </View>
                 </View>
                 </View>
@@ -32,7 +42,10 @@ export function EventPage ({ name, category, description, program, location }){
                     <TouchableOpacity style={[styles.button, styles.aboutButton]}>
                         <Text style={styles.buttonText}>I'm interested</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.mapsButton]}>
+                    <TouchableOpacity style={[styles.button, styles.mapsButton]} onPress={()=>navigation.navigate("MapScreen",{
+                        latitude:route.params.latitude,
+                        longitude:route.params.longitude,
+                    })}>
                         <Text style={styles.buttonText}>Maps</Text>
                     </TouchableOpacity>
                 </View>
@@ -84,6 +97,8 @@ const styles = StyleSheet.create({
         color: '#4A4A4A',
     },
     locationContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
         borderTopWidth: 1,
         borderTopColor: '#ccc',
         paddingTop: 20,
