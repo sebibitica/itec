@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Button, View } from "react-native";
 import EventPill from "../components/FeedComp";
-import data from "../events.json";
 import { Text } from "react-native";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -36,10 +35,6 @@ const FeedScreen = () => {
     };
     fetchData();
   }, []);
-
-  // const {islO }= 
-
-  console.log(data1);
 
   const nowH = new Date().getHours(),
     nowM = new Date().getMinutes();
