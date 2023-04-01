@@ -36,11 +36,23 @@ export default function QRScanner() {
       long = parseFloat(data.split(" ")[1]),
       name = data.split(" ")[2],
       address = data.split(" ")[3];
-    navigation.navigate("MapScreen", {
+      tip = data.split(" ")[4],
+      descriere= data.split(" ")[5],
+      ora= data.split(" ")[6],
+      datax= data.split(" ")[7];
+    name=name.replace(/;/g, " ");
+    address=address.replace(/;/g, " ");
+    tip=tip.replace(/;/g, " ");
+    descriere=descriere.replace(/;/g, " ");
+    navigation.navigate("EventPage", {
       latitude: lat,
       longitude: long,
       name: name,
-      address: address,
+      category: tip,
+      description: descriere,
+      program: ora,
+      location: address,
+      datax: datax,
     });
   };
 

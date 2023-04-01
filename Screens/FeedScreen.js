@@ -47,6 +47,8 @@ const FeedScreen = () => {
 
   const renderItem = ({ item }) => (
     <EventPill
+      lat={item.latLngLocation.lat}
+      lng={item.latLngLocation.lng}
       name={item.titlu}
       category={item.tip}
       description={item.descriere}
