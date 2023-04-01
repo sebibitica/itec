@@ -5,16 +5,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 import QRScanner from "./Screens/QRScanner";
-import { HomeScreen } from "./Screens/HomeScreen";
 import MapScreen from "./Screens/MapScreen";
+import FeedScreen from "./Screens/FeedScreen";
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="FeedScreen"
+          component={FeedScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
