@@ -4,7 +4,16 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
-const EventPill = ({ name, category, description, program, location }) => {
+const EventPill = ({
+  name,
+  category,
+  description,
+  program,
+  location,
+  data,
+}) => {
+  const datafrumos =
+    data.slice(8, 10) + "-" + data.slice(5, 7) + "-" + data.slice(0, 4);
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -16,6 +25,7 @@ const EventPill = ({ name, category, description, program, location }) => {
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.category}>{category}</Text>
           <Text style={styles.category}> - </Text>
+          <Text style={styles.category}>{datafrumos}</Text>
         </View>
 
         <Text style={styles.description}>{description}</Text>
