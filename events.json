@@ -1,0 +1,40 @@
+{
+    "events": [
+      {
+        "id": 1,
+        "name": "Slow Down / Mai încet! @ Teatrul Național Timișoara",
+        "category": "SPECTACOLE",
+        "description": "Slow Down / Mai încet! @ Teatrul Național Timișoara SLOW DOWN! / MAI ÎNCET! este un îndemn lansat unei lumi atât de grăbite, încât nu mai găsește timp să asculte.",
+        "program": "19:00",
+        "location": "TEATRUL NAŢIONAL MIHAI EMINESCU",
+        "date": "AZI"
+      },
+      {
+        "id": 2,
+        "name": "BROS @ Teatrul Național Timișoara",
+        "category": "TEATRU",
+        "description": "BROS @ Teatrul Național Timișoara O dictatură nenumită guvernează spectacolul BROS.",
+        "program": "20:00",
+        "location": "TEATRUL NAŢIONAL MIHAI EMINESCU",
+        "date": "AZI"
+      },
+      {
+        "id": 3,
+        "name": "Saturday is Josefin Karaoke Day @ Josefin Pub Timișoara",
+        "category": "PARTY",
+        "description": "Saturday is Josefin Karaoke Day @ Josefin Pub Timișoara Ne continuăm serile de karaoke la Josefin Pub și, începând din această săptămână avem eveniment în fiecare Joi, Vineri și Sâmbătă!",
+        "program": "21:00",
+        "location": "JOSEFIN PUB",
+        "date": "AZI"
+      },
+      {
+        "id": 4,
+        "name": "Saturday is Josefin Karaoke Day @ Josefin Pub Timișoara",
+        "category": "PARTY",
+        "description": "Saturday is Josefin Karaoke Day @ Josefin Pub Timișoara Ne continuăm serile de karaoke la Josefin Pub și, începând din această săptămână avem eveniment în fiecare Joi, Vineri și Sâmbătă!",
+        "program": "21:00",
+        "location": "JOSEFIN PUB",
+        "date": "MAINE"
+      }
+    ]
+  }
