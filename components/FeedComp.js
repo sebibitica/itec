@@ -4,21 +4,24 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
-const EventPill = ({
-  name,
-  category,
-  description,
-  program,
-  location,
-  data,
-}) => {
+const EventPill = ({ name, category, description, program, location , data}) => {
   const datafrumos =
-    data.slice(8, 10) + "-" + data.slice(5, 7) + "-" + data.slice(0, 4);
-  const navigation = useNavigation();
+  data.slice(8, 10) + "-" + data.slice(5, 7) + "-" + data.slice(0, 4);
+  const navigation = useNavigation()  
+  const handleAboutPress = () => {
+    navigation.navigate('EventPage', { 
+      name:name,
+      category:category,
+      description:description,
+      program:program,
+      location:location,
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <MaterialCommunityIcons name="calendar-clock" size={24} color="white" />
+        <MaterialCommunityIcons name="calendar-month" size={24} color="white" />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{name}</Text>
@@ -28,18 +31,18 @@ const EventPill = ({
           <Text style={styles.category}>{datafrumos}</Text>
         </View>
 
-        <Text style={styles.description}>{description}</Text>
+        {/* <Text style={styles.description}>{description}</Text> */}
         <View style={styles.programLocationContainer}>
           <MaterialCommunityIcons
             name="clock-outline"
-            size={16}
+            size={19}
             color="white"
             style={styles.icon}
           />
           <Text style={styles.program}>{program}</Text>
           <MaterialCommunityIcons
             name="map-marker-outline"
-            size={16}
+            size={19}
             color="white"
             style={styles.icon}
           />
@@ -48,13 +51,14 @@ const EventPill = ({
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.leftButton]}
-            //onPress={}
-          >
-            <Text style={styles.buttonText}>About</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={[styles.button, styles.leftButton]}
+          onPress={handleAboutPress}>
+          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <Text style={styles.buttonText}>About</Text>
+          </View>
+        </TouchableOpacity>
+          </View>
       </View>
     </View>
   );
@@ -86,8 +90,9 @@ const styles = StyleSheet.create({
   },
   category: {
     color: "#8F8F8F",
-    fontSize: 14,
+    fontSize: 17,
     marginBottom: 5,
+    marginLeft:3,
   },
   description: {
     color: "white",
@@ -100,13 +105,13 @@ const styles = StyleSheet.create({
   },
   program: {
     color: "white",
-    fontSize: 14,
+    fontSize: 17,
     marginLeft: 5,
     marginRight: 20,
   },
   location: {
     color: "white",
-    fontSize: 12,
+    fontSize: 17,
   },
   icon: {
     marginLeft: 5,
