@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 const dateToday = new Date().toISOString().slice(0, 10);
 console.log(dateToday);
 
+
 const url =
   "https://b2bw.fluxer.io/rest/script_php_306/getEvenimenteZileNopti/"+dateToday;
 
@@ -26,6 +27,8 @@ const FeedScreen = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  // const {islO }= 
+
   console.log(data1);
 
   const nowH = new Date().getHours(),
@@ -34,7 +37,8 @@ const FeedScreen = () => {
 
   const filteredData = data1.filter((item) => {
     const eventTime = item.ora;
-    return eventTime >= now;
+    // return eventTime >= now;
+    return true;
   });
 
   const renderItem = ({ item }) => (
