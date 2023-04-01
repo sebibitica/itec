@@ -45,13 +45,13 @@ export default function MapScreen() {
     setStartRegion({
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
-      latitudeDelta: location.coords.latitudeDelta,
-      longitudeDelta: location.coords.longitudeDelta,
+      latitudeDelta: 0.0122,
+      longitudeDelta: 0.0121,
     });
   };
 
   useEffect(() => {
-    //userLocation();
+    userLocation();
   }, []);
 
   return (
@@ -67,7 +67,7 @@ export default function MapScreen() {
             setShowModal(true);
           }}
           style={{
-            transform: [{ scale: 0.7 }],
+            transform: [{ scale: 0.4 }],
           }}
         ></Marker>
 
