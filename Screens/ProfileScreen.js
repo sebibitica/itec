@@ -45,6 +45,12 @@ export default function ProfileScreen() {
         setIsLoading(false);
     }
 
+    const handleLogout = async () => {
+        setIsLoading(true);
+        await auth.signOut();
+        setIsLoading(false);
+    }
+
     const checkIfLoggedIn = () => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -96,7 +102,7 @@ export default function ProfileScreen() {
                     onPress={handleLogin}
                     style={styles.button}
                 >
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Sign in</Text>
                 </TouchableOpacity>
 
 
@@ -123,7 +129,12 @@ export default function ProfileScreen() {
   {
     return (
         <View style={styles.container}>
-            <Text>Esti logat</Text>
+            <TouchableOpacity 
+                    onPress={() => {handleLogout()}}
+                    style={{marginTop: 10}}
+                >
+                    <Text style={styles.forgotText}>Sign out</Text>
+            </TouchableOpacity>
         </View>
     );
   }
