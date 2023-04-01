@@ -32,11 +32,16 @@ export default function QRScanner() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     console.log(data);
-    let lat = data.split(" ")[0],
-      long = data.split(" ")[1],
-      name= data.split(" ")[2],
-      address= data.split(" ")[3];
-    navigation.navigate("Maps", { latitude: lat, longitude: long , name: name, address: address});
+    let lat = parseFloat(data.split(" ")[0]),
+      long = parseFloat(data.split(" ")[1]),
+      name = data.split(" ")[2],
+      address = data.split(" ")[3];
+    navigation.navigate("MapScreen", {
+      latitude: lat,
+      longitude: long,
+      name: name,
+      address: address,
+    });
   };
 
   if (hasPermission === null) {

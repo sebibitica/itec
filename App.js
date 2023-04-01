@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 import QRScanner from "./Screens/QRScanner";
 import { HomeScreen } from "./Screens/HomeScreen";
-import { Maps } from "./Screens/Maps";
+import MapScreen from "./Screens/MapScreen";
 
 export default function App() {
   return (
@@ -23,8 +23,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Maps"
-          component={Maps}
+          name="MapScreen"
+          component={MapScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
