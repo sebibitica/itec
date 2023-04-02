@@ -39,3 +39,16 @@ Now you can install ExpoClient on your phone or emulator and run the app
 - Sebastian Bitica
 - Calin Bordeanu
 - Tudor Todea
+
+<div>
+<img src="assets/1.png" width=256/>
+<img src="assets/2.jpg" width=256/>
+<img src="assets/3.jpg" width=256/>
+<img src="assets/4.jpg" width=256/>
+</div>
+
+<div>
+<img src="assets/5.jpg" width=256/>
+<img src="assets/6.jpg" width=256/>
+<img src="assets/7.jpg" width=256/>
+</div>
