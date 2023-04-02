@@ -29,8 +29,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="MapScreen"
-          component={MapScreen}
+          name="EventPage"
+          component={EventPage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
