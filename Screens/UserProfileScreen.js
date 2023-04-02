@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import EventPill from '../components/FeedComp';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from 'react-native';
 import { useContext } from "react";
 import { AuthContext } from "./ProfileScreen";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { firestore } from '../firebase';
+import { auth } from '../firebase';
+import { RefreshControl } from 'react-native';
 
 const dateToday = new Date().toISOString().slice(0, 8);
 
@@ -15,11 +18,38 @@ const day = new Date().getDate();
 
 
 export function UserProfileScreen({firstName, lastName}) {
-    const [userData, setUserData] = useState("");
-    const [posts, setPosts] = useState([]);
 
-    const [data1, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [userEvents, setUserEvents] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      await firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("events")
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        setUserEvents(data);
+      })
+      .catch((error) => {
+        console.log("Error getting events: ", error);
+      });
+    }
+
+    getEvents();
+  }, [refreshing]);
+
+  const [userData, setUserData] = useState("");
+  const [data1, setData] = useState([]);
     useEffect(() => {
       const fetchData = async () => {
         const data = [];
@@ -34,10 +64,9 @@ export function UserProfileScreen({firstName, lastName}) {
         }
         const flatdata = data.flat();
         setData(flatdata);
-        setLoading(false);
       };
       fetchData();
-    }, []);
+    }, [refreshing]);
   
     const nowH = new Date().getHours(),
       nowM = new Date().getMinutes();
@@ -47,6 +76,38 @@ export function UserProfileScreen({firstName, lastName}) {
       const eventTime = item.ora;
       return eventTime >= now || eventTime < now;
     });
+
+    const [finalData, setFinalData] = useState([]);
+    
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          setUserData(snapshot.data());
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    if (userEvents.length > 0 || filteredData.length > 0) {
+      const eventsName = userEvents.map((event) => event.name);
+      const eventsDate = userEvents.map((event) => event.date);
+
+      const finalData = filteredData.filter((item) => {
+        const name = item.titlu;
+        const date = item.data;
+        let reversedDate = date.split("-").reverse().join("-");
+        return eventsName.includes(name) && eventsDate.includes(reversedDate);
+      });
+      setFinalData(finalData);
+    }
+  }, [data1, userEvents]);
+
+
+    //titlu
 
     const { handleLogout } = useContext(AuthContext);
 
@@ -69,7 +130,7 @@ export function UserProfileScreen({firstName, lastName}) {
         <View style={{flexDirection: "row", justifyContent: "space-between"}}>
           <View style={{flexDirection:'row'}}>
             <Text style={styles.helloMessage}>Hello,</Text>
-            <Text style={styles.helloMessageName}>Tudor Todea</Text>
+            <Text style={styles.helloMessageName}>{userData.firstname} {userData.lastname}</Text>
           </View>
 
           <TouchableOpacity onPress={()=>{handleLogout()}} style={{marginRight: 15}}>
@@ -86,8 +147,11 @@ export function UserProfileScreen({firstName, lastName}) {
         )}
         {filteredData.length > 0 && (
           <FlatList
-            data={filteredData}
+            data={finalData}
             renderItem={renderItem}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh}  />
+            }
             style={{ flexGrow: 1, margin: 10, marginBottom: 190 }}
           />
         )}

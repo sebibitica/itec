@@ -1,11 +1,12 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from '../firebase';
 import { useState, useEffect } from 'react';
+import { firestore } from '../firebase';
 
 
 export function EventPage ({ latitdue,longitude,name, category, description, program, location,datax }){
@@ -28,12 +29,90 @@ export function EventPage ({ latitdue,longitude,name, category, description, pro
      checkIfLoggedIn();
    }, []);
 
+   const [userEvents, setUserEvents] = useState([]);
+
+   useEffect(() => {
+    if(logged){
+        const getEvents = async () => {
+            await firestore
+            .collection("users")
+            .doc(auth.currentUser.uid)
+            .collection("events")
+            .get()
+            .then((querySnapshot) => {
+              const data = querySnapshot.docs.map((doc) => doc.data());
+              setUserEvents(data);
+            })
+            .catch((error) => {
+              console.log("Error getting events: ", error);
+            });
+          }
+      
+          getEvents();
+    }
+  }, [logged]);
+
    const handleInterested = () => {
         if(!logged){
             alert("You need to be logged in to do this");
             return;
         }
-        alert("You are interested in this event");
+        else{
+            const eventsName = userEvents.map((event) => event.name);
+            const eventsDate = userEvents.map((event) => event.date);
+            
+            if(eventsName.includes(route.params.name) && eventsDate.includes(route.params.datax)){
+                Alert.alert(
+                    "You are already interested in this event",
+                    "Do you want to remove it from your list?",
+                    [
+                        {
+                            text: "Cancel",
+                            style: "cancel"
+                        },
+                        { text: "Yes", onPress: () => {
+                            firestore
+                            .collection("users")
+                            .doc(auth.currentUser.uid)
+                            .collection("events")
+                            .where("name", "==", route.params.name)
+                            .where("date", "==", route.params.datax)
+                            .get()
+                            .then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+                                doc.ref.delete().then(() => {
+                                    alert("Event removed from your list");
+                                }).catch(error => {
+                                    console.log("Error removing event: ", error);
+                                });
+                                });
+                            })
+                            .catch(error => {
+                                console.log("Error querying events: ", error);
+                            });
+                        } }
+                    ],
+                    { cancelable: false }
+                )
+                return;
+            }
+            else { 
+                firestore
+                .collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("events")
+                .add({
+                    name: route.params.name,
+                    date: route.params.datax
+                })
+                .then(() => {
+                    alert("Event added to your list");
+                })
+                .catch((error) => {
+                    console.log("Error adding event: ", error);
+                });
+            }
+        }
    }
 
     return (

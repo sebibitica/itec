@@ -29,7 +29,7 @@ export default function ForgotScreen(){
             <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
                 {isLoading && <ActivityIndicator size={"large"} color={"#999999"} />}
             </View>
-            <Text style={{fontSize: 22, marginBottom: 20, fontWeight: "400"}} >Forgot your password?</Text>
+            <Text style={{fontSize: 22, marginBottom: 20, fontWeight: "500"}} >Forgot your password?</Text>
 
             <View style={styles.inputContainer}>
                 <View>

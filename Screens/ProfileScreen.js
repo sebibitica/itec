@@ -80,6 +80,9 @@ export default function ProfileScreen() {
         <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
             {isLoading && <ActivityIndicator size={"large"} color={"#999999"} />}
         </View>
+
+        <Image style={{height: "40%", width: "100%"}} source={require("../assets/timisoara2023.png")} />
+
         <View style={styles.inputContainer}>
             <View>
                 <TextInput
@@ -137,6 +140,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: 150,
     },
     inputContainer: {
         width: "80%",
