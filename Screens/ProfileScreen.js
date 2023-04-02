@@ -13,6 +13,9 @@ import {
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { auth } from "../firebase";
+import { UserProfileScreen } from "./UserProfileScreen";
+
+export const AuthContext = createContext();
 
 export default function ProfileScreen() {
     const navigation = useNavigation();
@@ -36,10 +39,6 @@ export default function ProfileScreen() {
         {
             if(!auth.currentUser.emailVerified){
                 alert("Verify your email to continue");
-            }
-            else{
-                alert("Logged");
-                {/*  */}
             }
         }
         setIsLoading(false);
@@ -65,79 +64,68 @@ export default function ProfileScreen() {
      checkIfLoggedIn();
    }, [setIsLoading]);
 
-
-  if(!logged)
-  {
-    return (
+   return (
+    <AuthContext.Provider value={{ handleLogout }}>
+      {
+      logged ? 
+        (<UserProfileScreen />) : (
         <KeyboardAvoidingView 
-            style={styles.container}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-        >
-            <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
-                {isLoading && <ActivityIndicator size={"large"} color={"#999999"} />}
-            </View>
-            <View style={styles.inputContainer}>
-                <View>
-                    <TextInput
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                        style={styles.input}
-                    />
-                </View>
-
-                <View>
-                    <TextInput
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                        secureTextEntry
-                        style={styles.input}
-                    />
-                </View>
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity 
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Sign in</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity 
-                    onPress={() => {navigation.navigate("Register")}}
-                    style={{marginTop: 15}}
-                >
-                    <Text style={styles.signUpText}>Create a new account</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    onPress={() => {navigation.navigate("Forgot")}}
-                    style={{marginTop: 10}}
-                >
-                    <Text style={styles.forgotText}>Forgot password?</Text>
-                </TouchableOpacity>
-                
-            </View>
-
-        </KeyboardAvoidingView>
-    );
-  }
-  else
-  {
-    return (
-        <View style={styles.container}>
-            <TouchableOpacity 
-                    onPress={() => {handleLogout()}}
-                    style={{marginTop: 10}}
-                >
-                    <Text style={styles.forgotText}>Sign out</Text>
-            </TouchableOpacity>
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+        <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
+            {isLoading && <ActivityIndicator size={"large"} color={"#999999"} />}
         </View>
-    );
-  }
+        <View style={styles.inputContainer}>
+            <View>
+                <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={styles.input}
+                />
+            </View>
+
+            <View>
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    secureTextEntry
+                    style={styles.input}
+                />
+            </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+                onPress={handleLogin}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText}>Sign in</Text>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity 
+                onPress={() => {navigation.navigate("Register")}}
+                style={{marginTop: 15}}
+            >
+                <Text style={styles.signUpText}>Create a new account</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                onPress={() => {navigation.navigate("Forgot")}}
+                style={{marginTop: 10}}
+            >
+                <Text style={styles.forgotText}>Forgot password?</Text>
+            </TouchableOpacity>
+            
+        </View>
+
+    </KeyboardAvoidingView>
+      )}
+    </AuthContext.Provider>
+  );
 }
 
 const styles = StyleSheet.create({
