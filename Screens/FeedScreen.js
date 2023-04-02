@@ -61,10 +61,6 @@ const FeedScreen = () => {
   return (
     <View style={{ height: "100%" }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Button
-          title="press"
-          onPress={() => navigation.navigate("QRScanner")}
-        />
         <Text style={styles.title}>Events this week</Text>
         {filteredData.length === 0 && (
           <Text style={{ textAlign: "center" }}>No upcoming events today</Text>
@@ -73,7 +69,7 @@ const FeedScreen = () => {
           <FlatList
             data={filteredData}
             renderItem={renderItem}
-            style={{ flexGrow: 1, margin: 10 }}
+            style={{ flexGrow: 1, margin: 10, marginBottom: 80 }}
           />
         )}
       </SafeAreaView>

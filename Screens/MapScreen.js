@@ -19,7 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function MapScreen() {
   const route = useRoute();
-  const naigation = useNavigation();
+  const navigation = useNavigation();
 
   const [mapRegion, setMapRegion] = useState({
     latitude: route.params.latitude,
@@ -81,13 +81,12 @@ export default function MapScreen() {
       <View style={styles.mapContainer}>
         <MapView style={styles.map} region={mapRegion}>
             {directionsActive ? (
-                <Marker coordinate={startRegion}/>
+                <Marker coordinate={startRegion} title="Your location"/>
             ) : null}
            
             <Marker
                 coordinate={destinationRegion}
-                calloutEnabled={false}>
-                <Image style={{transform: [{scale: 0.2}]}} source={require("../assets/MapMarker.png")}/>
+                title="Event location">
             </Marker>
 
             {
@@ -105,14 +104,16 @@ export default function MapScreen() {
       </View>
 
       {/* Indicator de incarcare */}
-      <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {isLoading && <ActivityIndicator size={"large"} color={"#999999"} />}
+      {isLoading ? (
+        <View style={{ position: "absolute", flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size={"large"} color={"#999999"} />
       </View>
+      ) : null}
 
       {/* Buton de mers inapoi */}
       <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={()=>{naigation.pop(2)}}>
-            <Image style={styles.backButton} source={require("../assets/backButton.png")}/>
+        <TouchableOpacity style={styles.backButton} onPress={()=>{navigation.pop(2)}}>
+            <Image style={styles.backButtonImg} source={require("../assets/backButton.png")}/>
         </TouchableOpacity>
       </View>
 
@@ -159,12 +160,15 @@ const styles = StyleSheet.create({
   },
 
   backButton: {
-    width: 50,
-    height: 50,
-    backgroundColor:"yellow",
-    borderRadius: 50,
     bottom: SCREEN_HEIGHT/2 - 100,
     right: SCREEN_WIDTH/2 - 60,
+  },
+
+  backButtonImg: {
+    width: 50,
+    height: 50,
+    backgroundColor:"#EDC71C",
+    borderRadius: 50,
   },
 
   buttonContainer: {
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
   },
 
   button:{
-    backgroundColor: "#ebbe44",
+    backgroundColor: "#EDC71C",
     width: "50%",
     height: 70,
     alignItems: "center",

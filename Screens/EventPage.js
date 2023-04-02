@@ -4,11 +4,38 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from '../firebase';
+import { useState, useEffect } from 'react';
 
 
 export function EventPage ({ latitdue,longitude,name, category, description, program, location,datax }){
     const navigation=useNavigation();
     const route = useRoute();
+
+    const [logged, setLogged] = useState(false);
+
+    const checkIfLoggedIn = () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                setLogged(true);
+            } else {
+                setLogged(false);
+            }
+        });
+    }
+
+   useEffect(() => {
+     checkIfLoggedIn();
+   }, []);
+
+   const handleInterested = () => {
+        if(!logged){
+            alert("You need to be logged in to do this");
+            return;
+        }
+        alert("You are interested in this event");
+   }
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -39,7 +66,7 @@ export function EventPage ({ latitdue,longitude,name, category, description, pro
                 </View>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={[styles.button, styles.aboutButton]}>
+                    <TouchableOpacity style={[styles.button, styles.aboutButton]} onPress={()=>{handleInterested()}}>
                         <Text style={styles.buttonText}>I'm interested</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, styles.mapsButton]} onPress={()=>navigation.navigate("MapScreen",{
