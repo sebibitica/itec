@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import EventPill from '../components/FeedComp';
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { TouchableOpacity } from 'react-native';
+import { useContext } from "react";
+import { AuthContext } from "./ProfileScreen";
 
 const dateToday = new Date().toISOString().slice(0, 8);
 
@@ -41,6 +45,8 @@ export function UserProfileScreen({firstName, lastName}) {
       return eventTime >= now || eventTime < now;
     });
 
+    const { handleLogout } = useContext(AuthContext);
+
     const renderItem = ({ item }) => (
         <EventPill
           lat={item.latLngLocation.lat}
@@ -57,9 +63,15 @@ export function UserProfileScreen({firstName, lastName}) {
     <View style={{ height: "100%" }}>
     <SafeAreaView style={{ flex: 1 }}>
       <View >
-        <View style={{flexDirection:'row'}}>
-        <Text style={styles.helloMessage}>Hello,</Text>
-        <Text style={styles.helloMessageName}>Tudor Todea</Text>
+        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+          <View style={{flexDirection:'row'}}>
+            <Text style={styles.helloMessage}>Hello,</Text>
+            <Text style={styles.helloMessageName}>Tudor Todea</Text>
+          </View>
+
+          <TouchableOpacity onPress={()=>{handleLogout()}} style={{marginRight: 15}}>
+            <Ionicons name="log-out-outline" size={30} color="black" />
+          </TouchableOpacity>
         </View>
         
         <View style={styles.upcomingEvents}>
@@ -73,7 +85,7 @@ export function UserProfileScreen({firstName, lastName}) {
           <FlatList
             data={filteredData}
             renderItem={renderItem}
-            style={{ flexGrow: 1, margin: 10 }}
+            style={{ flexGrow: 1, margin: 10, marginBottom: 190 }}
           />
         )}
       </View>
