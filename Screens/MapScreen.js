@@ -112,7 +112,7 @@ export default function MapScreen() {
 
       {/* Buton de mers inapoi */}
       <View style={styles.backButtonContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={()=>{navigation.pop(2)}}>
+        <TouchableOpacity style={styles.backButton} onPress={()=>{navigation.pop(1)}}>
             <Image style={styles.backButtonImg} source={require("../assets/backButton.png")}/>
         </TouchableOpacity>
       </View>

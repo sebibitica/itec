@@ -25,7 +25,7 @@ import {
     const [firstname, setFName] = useState("");
     const [lastname, setLName] = useState("");
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         setIsLoading(true);
         if (firstname.length === 0) {
             alert("Please enter your first name");
@@ -46,7 +46,7 @@ import {
 
         let signUpError = false;
 
-        auth
+        await auth
         .createUserWithEmailAndPassword(email, password)
         .catch((error) => {
             alert(error.message);
@@ -56,12 +56,13 @@ import {
             if (!signUpError) {
             auth.currentUser
                 .sendEmailVerification({
-                handleCodeInApp: true,
-                url: "https://itec-33d26.firebaseapp.com",
+                    handleCodeInApp: true,
+                    url: "https://itec-33d26.firebaseapp.com",
                 })
                 .then(() => {
-                alert("Verification email sent");
-                navigation.pop(1);
+                    alert("Verification email sent");
+                    auth.signOut();
+                    navigation.pop(1);
                 });
             }
         })
@@ -80,7 +81,6 @@ import {
             });
         });
 
-        auth.signOut();
         setIsLoading(false);
     };
 
