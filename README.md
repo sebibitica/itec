@@ -36,9 +36,9 @@ Now you can install ExpoClient on your phone or emulator and run the app
 - [Firebase](https://firebase.google.com/) - a cloud-based platform for building web and mobile apps
 
 # Creators
-- Sebastian Bitica
-- Calin Bordeanu
-- Tudor Todea
+- [Sebastian Bitica](https://www.linkedin.com/in/sebastianbitica/)
+- [Calin Bordeanu](https://www.linkedin.com/in/calin-bordeanu-39b44b251/)
+- [Tudor Todea](https://www.linkedin.com/in/tudor-todea-591718240/)
 
 <div>
 <img src="screenshots/1.png" width=256/>
