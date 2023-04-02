@@ -27,11 +27,10 @@ export default function QRScanner() {
     };
 
     getBarCodeScannerPermissions();
-  }, []);
+  }, [scanned]);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    console.log(data);
     let lat = parseFloat(data.split(" ")[0]),
       long = parseFloat(data.split(" ")[1]),
       name = data.split(" ")[2],
@@ -44,6 +43,7 @@ export default function QRScanner() {
     address=address.replace(/;/g, " ");
     tip=tip.replace(/;/g, " ");
     descriere=descriere.replace(/;/g, " ");
+    setScanned(false);
     navigation.navigate("EventPage", {
       latitude: lat,
       longitude: long,
