@@ -39,6 +39,10 @@ export default function ProfileScreen() {
         {
             if(!auth.currentUser.emailVerified){
                 alert("Verify your email to continue");
+                setLogged(false);
+            }
+            else{
+                setLogged(true);
             }
         }
         setIsLoading(false);
@@ -62,7 +66,7 @@ export default function ProfileScreen() {
 
    useEffect(() => {
      checkIfLoggedIn();
-   }, [setIsLoading]);
+   }, []);
 
    return (
     <AuthContext.Provider value={{ handleLogout }}>
