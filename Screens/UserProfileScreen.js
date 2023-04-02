@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import EventPill from '../components/FeedComp';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from 'react-native';
 import { useContext } from "react";
 import { AuthContext } from "./ProfileScreen";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const dateToday = new Date().toISOString().slice(0, 8);
 
@@ -14,6 +15,8 @@ const day = new Date().getDate();
 
 
 export function UserProfileScreen({firstName, lastName}) {
+    const [userData, setUserData] = useState("");
+    const [posts, setPosts] = useState([]);
 
     const [data1, setData] = useState([]);
     const [loading, setLoading] = useState(true);
